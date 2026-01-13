@@ -1,0 +1,7 @@
+node_modules/
+current.json
+gamestate.json
+saves/
+*.log
+.DS_Store
+.claude/

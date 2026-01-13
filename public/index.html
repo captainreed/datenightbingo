@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Night Bingo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <input type="text" id="game-title" class="title-input" value="Date Night Bingo" maxlength="100" placeholder="Enter game title...">
+    </header>
+
+    <div class="controls">
+      <div class="grid-selector">
+        <label>Grid Size:</label>
+        <select id="grid-size">
+          <option value="3">3x3</option>
+          <option value="4">4x4</option>
+          <option value="5" selected>5x5</option>
+          <option value="6">6x6</option>
+        </select>
+      </div>
+      <div class="buttons">
+        <button id="scramble-btn" class="btn btn-scramble">Scramble</button>
+        <button id="clear-btn" class="btn btn-clear">Clear All</button>
+        <button id="settings-btn" class="btn btn-settings" title="Manage Saves">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="bingo-board" class="bingo-board"></div>
+
+    <div id="card-inputs" class="card-inputs"></div>
+
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <!-- Save Management Modal -->
+  <div id="saves-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Manage Saves</h2>
+        <button id="modal-close" class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="save-new">
+          <input type="text" id="save-name-input" placeholder="Enter save name..." maxlength="50">
+          <button id="save-as-btn" class="btn btn-save">Save As</button>
+        </div>
+        <div class="saves-list-container">
+          <h3>Saved Games</h3>
+          <div id="saves-list" class="saves-list">
+            <p class="no-saves">No saved games yet</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="confetti-container"></div>
+  <div id="fireworks-container"></div>
+  <canvas id="celebration-canvas"></canvas>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
