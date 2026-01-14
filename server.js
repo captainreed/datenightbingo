@@ -162,9 +162,26 @@ io.on('connection', (socket) => {
   // Handle grid size change
   socket.on('changeGridSize', (size) => {
     if ([3, 4, 5, 6].includes(size)) {
+      const oldCards = gameState.cards;
+      const newCount = size * size;
+      const newCards = [];
+
+      // Preserve existing cards that fit in the new grid
+      for (let i = 0; i < newCount; i++) {
+        const existingCard = oldCards.find(c => c.id === i);
+        if (existingCard) {
+          // Keep existing card but reset order to fit new grid
+          newCards.push({ id: i, text: existingCard.text, order: i });
+        } else {
+          // Create new empty card
+          newCards.push({ id: i, text: '', order: i });
+        }
+      }
+
+      // Filter selected cards to only include those that still exist
+      gameState.selectedCards = gameState.selectedCards.filter(id => id < newCount);
       gameState.gridSize = size;
-      gameState.cards = initializeCards(size);
-      gameState.selectedCards = [];
+      gameState.cards = newCards;
       io.emit('gameState', gameState);
     }
   });

@@ -50,11 +50,7 @@ function setupEventListeners() {
   // Grid size change
   gridSizeSelect.addEventListener('change', (e) => {
     const size = parseInt(e.target.value);
-    if (confirm('Changing grid size will reset all cards. Continue?')) {
-      socket.emit('changeGridSize', size);
-    } else {
-      gridSizeSelect.value = gameState.gridSize;
-    }
+    socket.emit('changeGridSize', size);
   });
 
   // Control buttons
