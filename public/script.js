@@ -166,6 +166,7 @@ function renderBoard() {
     cardEl.className = 'bingo-card';
     cardEl.dataset.id = card.id;
     cardEl.textContent = card.text || `#${card.id + 1}`;
+    cardEl.style.fontSize = calculateFontSize(card.text || '', gameState.gridSize);
 
     if (gameState.selectedCards.includes(card.id)) {
       cardEl.classList.add('selected');
@@ -228,11 +229,33 @@ function updateCharCount(el, count) {
   }
 }
 
+// ===========================================
+// TEXT SCALING CONFIGURATION
+// Target number of characters to fit without shrinking
+const CARD_TEXT_TARGET_CHARS = 20;
+// ===========================================
+
+// Calculate font size based on text length
+function calculateFontSize(text, gridSize) {
+  const length = text.length;
+  if (length === 0) return '0.9rem';
+
+  // Base font sizes vary by grid size (smaller grids = larger cards = larger text)
+  const baseSizes = { 3: 1.0, 4: 0.85, 5: 0.75, 6: 0.65 };
+  const baseSize = baseSizes[gridSize] || 0.75;
+
+  // Always scale based on text length to fit ~30 chars comfortably
+  // Shorter text gets larger font, longer text gets smaller
+  const scale = Math.min(1.2, Math.max(0.3, CARD_TEXT_TARGET_CHARS / length));
+  return (baseSize * scale) + 'rem';
+}
+
 // Update a single card's display
 function updateCardDisplay(id, text) {
   const cardEl = bingoBoard.querySelector(`[data-id="${id}"]`);
   if (cardEl) {
     cardEl.textContent = text || `#${id + 1}`;
+    cardEl.style.fontSize = calculateFontSize(text || '', gameState.gridSize);
   }
 }
 
